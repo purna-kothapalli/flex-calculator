@@ -1,216 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>⚡ Flexi Payout by % + Auto Ranks</title>
-    <style>
-        body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 30px;
-  max-width: 900px;
-  margin: auto;
-  background-color: #f4f7fa;
-  color: #333;
-}
+  <meta charset="UTF-8" />
+  <title>⚡ Flexi Payout by % + Auto Ranks</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      margin: auto;
+      background: #f0f4f8;
+      color: #333;
+      max-width: 100%;
+    }
 
-h2, h3 {
-  color: #2c3e50;
-}
+    h2, h3 {
+      color: #2a4365;
+      margin-top: 0;
+    }
 
-input, button {
-  padding: 10px;
-  margin: 5px 0;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-}
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 15px 0 5px;
+    }
 
-input:focus {
-  border-color: #3498db;
-}
+    input {
+      padding: 10px;
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
 
-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background-color 0.2s ease;
-  border-radius: 6px;
-}
+    input:focus {
+      border-color: #3182ce;
+      outline: none;
+    }
 
-button:hover {
-  background-color: #2980b9;
-}
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
 
-button:active {
-  transform: scale(0.98);
-}
+    .form-group > div {
+      flex: 1;
+      min-width: 180px;
+    }
 
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
-}
+    button {
+      padding: 10px 15px;
+      margin: 10px 5px 0 0;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
 
-.slab-container {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #ecf0f1;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
+    button:hover {
+      background-color: #225ea8;
+    }
 
-.slab-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-}
+    .slab-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
-.slab-row input {
-  width: 130px;
-  flex: 1 1 130px;
-}
+    .slab-row input {
+      flex: 1;
+      min-width: 100px;
+    }
 
-.slab-row button {
-  background-color: #fbf8f8;
-  font-weight: bold;
-  color: white;
-  transition: background-color 0.2s ease;
-}
+    .slab-row button {
+      background-color: #b8b5b5;
+    }
 
-.slab-row button:hover {
-  background-color: #f7f3f3;
-}
+    .slab-row button:hover {
+      background-color: #c53030;
+    }
 
+    .slab-container {
+      margin-top: 15px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
 
-.results {
-  font-family: 'Courier New', Courier, monospace;
-  white-space: pre-wrap;
-  background: #fff;
-  padding: 15px;
-  border: 1px solid #bbb;
-  border-radius: 6px;
-  margin-top: 25px;
-  max-height: 500px;
-  overflow-y: auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
+    .results {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #ffffff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
 
-    </style>
+    @media screen and (max-width: 600px) {
+      h2, h3 {
+        font-size: 1.3rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .slab-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .slab-row input {
+        width: 100%;
+      }
+
+      .slab-row button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-    <h2>🎯 Flexi Payout Calculator</h2>
-    <label>Entry Fee (₹):</label><br>
-    <input type="number" id="entryFee" placeholder="e.g. 10"><br>
+  <h2>🎯 Flexi Payout Calculator</h2>
 
-    <label>Number of Users Joined:</label><br>
-    <input type="number" id="joinedUsers" placeholder="e.g. 500"><br>
-    <label>Users per Rank (e.g. 3):</label><br>
-    <input type="number" id="usersPerRank" placeholder="e.g. 3"><br>
+  <div class="form-group">
+    <div>
+      <label>Entry Fee (₹):</label>
+      <input type="number" id="entryFee" placeholder="e.g. 10">
+    </div>
 
-    <label>Total Prize Pool % (e.g. 90):</label><br>
-    <input type="number" id="prizePercent" placeholder="e.g. 90"><br>
+    <div>
+      <label>Number of Users Joined:</label>
+      <input type="number" id="joinedUsers" placeholder="e.g. 500">
+    </div>
 
-    <h3>🏆 Define Rank Slabs (Slab gets % of total pool)</h3>
-    <div id="slabContainer" class="slab-container"></div>
-    <button onclick="addSlab()">➕ Add Slab</button>
-    <button onclick="calculate()">✅ Calculate</button>
+    <div>
+      <label>Users per Rank:</label>
+      <input type="number" id="usersPerRank" placeholder="e.g. 3">
+    </div>
 
-    <div class="results" id="output"></div>
+    <div>
+      <label>Total Prize Pool %:</label>
+      <input type="number" id="prizePercent" placeholder="e.g. 90">
+    </div>
+  </div>
 
-    <script>
-        function addSlab() {
-            const container = document.getElementById('slabContainer');
-            const row = document.createElement('div');
-            row.className = 'slab-row';
+  <h3>🏆 Define Rank Slabs</h3>
+  <div id="slabContainer" class="slab-container"></div>
+  <button onclick="addSlab()">➕ Add Slab</button>
+  <button onclick="calculate()">✅ Calculate</button>
 
-            row.innerHTML = `
+  <div class="results" id="output"></div>
+
+  <script>
+    function addSlab() {
+      const container = document.getElementById('slabContainer');
+      const row = document.createElement('div');
+      row.className = 'slab-row';
+
+      row.innerHTML = `
         <input type="number" placeholder="Start Rank" class="startRank" />
         <input type="number" placeholder="End Rank" class="endRank" />
-        <input type="number" placeholder="Prize/User ₹" class="userPrize" />
-
+        <input type="number" placeholder="Prize/Rank ₹" class="prize" />
         <button onclick="this.parentElement.remove()">❌</button>
       `;
 
-            container.appendChild(row);
+      container.appendChild(row);
+    }
+
+    function calculate() {
+      const entryFee = parseFloat(document.getElementById('entryFee').value);
+      const joinedUsers = parseInt(document.getElementById('joinedUsers').value);
+      const prizePercent = parseFloat(document.getElementById('prizePercent').value);
+      const usersPerRank = parseInt(document.getElementById('usersPerRank').value);
+
+      if (
+        isNaN(entryFee) || entryFee <= 0 ||
+        isNaN(joinedUsers) || joinedUsers <= 0 ||
+        isNaN(prizePercent) || prizePercent <= 0 || prizePercent > 100 ||
+        isNaN(usersPerRank) || usersPerRank <= 0
+      ) {
+        alert("Please enter valid values for all inputs.");
+        return;
+      }
+
+      const maxRanks = Math.floor(joinedUsers / usersPerRank);
+      const totalCollection = entryFee * joinedUsers;
+      const actualPrizePool = (prizePercent / 100) * totalCollection;
+
+      const slabRows = document.querySelectorAll('.slab-row');
+      let baseRanks = [];
+
+      for (let row of slabRows) {
+        const start = parseInt(row.querySelector('.startRank').value);
+        const end = parseInt(row.querySelector('.endRank').value);
+        const prize = parseFloat(row.querySelector('.prize').value);
+
+        if (isNaN(start) || isNaN(end) || isNaN(prize) || start <= 0 || end < start || prize <= 0) {
+          alert("Please check your rank slab inputs.");
+          return;
         }
 
-        function calculate() {
-  const entryFee = parseFloat(document.getElementById('entryFee').value);
-  const joinedUsers = parseInt(document.getElementById('joinedUsers').value);
-  const prizePercent = parseFloat(document.getElementById('prizePercent').value);
-  const usersPerRank = parseInt(document.getElementById('usersPerRank').value);
+        for (let i = start; i <= end; i++) {
+          baseRanks.push({ rank: i, prize });
+        }
+      }
 
-  if (
-    isNaN(entryFee) || entryFee <= 0 ||
-    isNaN(joinedUsers) || joinedUsers <= 0 ||
-    isNaN(prizePercent) || prizePercent <= 0 || prizePercent > 100 ||
-    isNaN(usersPerRank) || usersPerRank <= 0
-  ) {
-    alert("Please enter valid inputs.");
-    return;
-  }
+      baseRanks = baseRanks
+        .filter(r => r.rank <= joinedUsers)
+        .slice(0, maxRanks);
 
-  const totalCollection = entryFee * joinedUsers;
-  const prizePool = (prizePercent / 100) * totalCollection;
-  const maxRanks = Math.floor(joinedUsers / usersPerRank);
+      if (baseRanks.length === 0) {
+        alert(`No ranks available — only ${joinedUsers} users joined.`);
+        return;
+      }
 
-  const slabRows = document.querySelectorAll('.slab-row');
-  let baseRanks = [];
-  let totalPrizeUsed = 0;
+      const totalBase = baseRanks.reduce((sum, r) => sum + r.prize, 0);
+      const multiplier = actualPrizePool / totalBase;
 
-  for (let row of slabRows) {
-    const start = parseInt(row.querySelector('.startRank').value);
-    const end = parseInt(row.querySelector('.endRank').value);
-    const prizePerUser = parseFloat(row.querySelector('.userPrize').value);
+      let output = `🎟️ Entry Fee: ₹${entryFee}\n👥 Joined Users: ${joinedUsers}\n👤 Users per Rank: ${usersPerRank}\n🏆 Max Ranks Paid: ${maxRanks}\n📊 Prize Pool %: ${prizePercent}%\n💰 Total Collection: ₹${totalCollection.toFixed(2)}\n🎁 Prize Pool Used: ₹${actualPrizePool.toFixed(2)}\n\n📈 Rank-wise Payouts:\n`;
 
-    if (
-      isNaN(start) || isNaN(end) || isNaN(prizePerUser) ||
-      start <= 0 || end < start || prizePerUser <= 0
-    ) {
-      alert("Please check your slab inputs.");
-      return;
+      baseRanks.forEach(r => {
+        const scaled = Math.floor(r.prize * multiplier * 100) / 100;
+        output += `Rank ${r.rank}: ₹${scaled}\n`;
+      });
+
+      document.getElementById('output').innerHTML = output;
     }
-
-    const numRanks = end - start + 1;
-
-    for (let i = start; i <= end; i++) {
-      if (i > joinedUsers) break;
-      baseRanks.push({ rank: i, prize: prizePerUser });
-      totalPrizeUsed += prizePerUser;
-    }
-  }
-
-  baseRanks = baseRanks.slice(0, maxRanks);
-
-  if (baseRanks.length === 0) {
-    alert(`No valid ranks — only ${joinedUsers} users joined.`);
-    return;
-  }
-
-  if (totalPrizeUsed > prizePool) {
-    alert(`⚠️ Total Prize Used (₹${totalPrizeUsed.toFixed(2)}) exceeds Prize Pool (₹${prizePool.toFixed(2)}).`);
-    return;
-  }
-
-  let output = `🎟️ Entry Fee: ₹${entryFee}\n👥 Joined Users: ${joinedUsers}\n📊 Prize Pool %: ${prizePercent}%\n🏆 Max Ranks Paid: ${maxRanks}\n💰 Total Collection: ₹${totalCollection.toFixed(2)}\n🎁 Prize Pool Used: ₹${totalPrizeUsed.toFixed(2)}\n\n📈 Rank-wise Payouts:\n`;
-
-  baseRanks.forEach(r => {
-    output += `Rank ${r.rank}: ₹${r.prize.toFixed(2)}\n`;
-  });
-
-  document.getElementById('output').innerHTML = output;
-}
-
-    </script>
+  </script>
 
 </body>
-
 </html>
